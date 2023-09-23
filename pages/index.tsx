@@ -1,12 +1,8 @@
 import { Client } from '@notionhq/client'
-import { GetStaticProps } from 'next'
-import { NextPage } from 'next'
-import styles from '../styles/Home.module.css';
-import dayjs from 'dayjs';
+import { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints';
+import { GetStaticProps,NextPage } from 'next'
 import prism from 'prismjs'
 import { useEffect } from 'react';
-import { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints';
-import Link from 'next/link';
 import { Layout } from '../lib/component/Layout';
 import { PostComponent } from '../lib/component/Post';
 
@@ -156,7 +152,7 @@ export const getPostContents = async (post: Post) => {
   return contents
 }
 
-export const getStaticProps: GetStaticProps<{}> = async () => {
+export const getStaticProps: GetStaticProps<StaticProps> = async () => {
   const posts = await getPosts();
   const contentsList = await Promise.all(
     posts.map((post) => {
@@ -167,7 +163,8 @@ export const getStaticProps: GetStaticProps<{}> = async () => {
     post.contents = contentsList[index]
   })
   return {
-    props: { posts }
+    props: { posts },
+    revalidate: 60
   };
 }
 

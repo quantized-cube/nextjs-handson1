@@ -1,9 +1,7 @@
-import { GetStaticPaths } from "next";
-import { Post, getPostContents, getPosts } from '..';
-import { GetStaticProps } from "next";
-import { NextPage } from 'next'
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import prism from 'prismjs'
 import { useEffect } from 'react';
+import { Post, getPostContents, getPosts } from '..';
 import { Layout } from '../../lib/component/Layout';
 import { PostComponent } from '../../lib/component/Post';
 
@@ -67,7 +65,7 @@ const PostPage: NextPage<StaticProps> = ({ post }) => {
   }, [])
 
   if (!post) return null
-  // return <div>{JSON.stringify(post)}</div>
+
   return (
     <Layout>
       <PostComponent post={post} />
